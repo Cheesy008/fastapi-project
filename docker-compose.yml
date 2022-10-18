@@ -1,0 +1,55 @@
+version: "3.8"
+services:
+  backend:
+    privileged: true
+    build:
+      context: ./src
+    command: sh -c "uvicorn main:app --host 0.0.0.0 --port 4000 --reload"
+    env_file:
+      - .env
+    volumes:
+      - "./src:/src"
+    depends_on:
+      - db
+      - redis
+    ports:
+      - "4000:4000"
+
+  celery:
+    build:
+      context: ./src
+    command: celery -A core.celery worker -l info
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - "./src/:/src"
+
+  db:
+    image: postgres:14.5-alpine
+    volumes:
+      - ./postgresdata:/var/lib/postgresql/data
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_PASSWORD
+      - POSTGRES_PORT
+      - POSTGRES_NAME
+      - POSTGRES_USER
+      - POSTGRES_DB
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:6.2-alpine
+    env_file:
+      - .env
+    volumes:
+      - redisdata:/data
+    ports:
+      - "6379:6379"
+
+volumes:
+  redisdata:
