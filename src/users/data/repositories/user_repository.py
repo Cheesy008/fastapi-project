@@ -2,15 +2,17 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from users.data.models import User
-from users.domain.repositories.user_repository import IUserRepository
+from users.domain.dto.user import UserCreateDBSchema
 
 
-class UserRepository(IUserRepository):
+class UserRepository:
+    model = User
+
     def __init__(self, session: AsyncSession) -> None:
         self.session = session
 
-    async def create_user(self, data: dict) -> None:
-        db_user = self.model(**data)
+    async def create_user(self, data: UserCreateDBSchema) -> None:
+        db_user = self.model(**data.dict())
         self.session.add(db_user)
         await self.session.commit()
         await self.session.refresh(db_user)

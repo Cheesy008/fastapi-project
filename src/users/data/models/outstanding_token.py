@@ -12,7 +12,7 @@ class OutstandingToken(Base):
     jti = Column(String, unique=True, index=True, nullable=False)
     token = Column(String, nullable=False)
 
-    expires_at = Column(DateTime())
+    expires_at = Column(DateTime(timezone=True))
 
     blacklist_token = relationship(
         "BlacklistToken", back_populates="outstanding_token", uselist=False

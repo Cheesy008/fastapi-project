@@ -4,7 +4,7 @@ from pydantic import EmailStr, validator
 
 from core.dto import BaseInSchema, BaseOutSchema
 from users.enums import BustType
-from users.utils import validate_url
+from users.utils import validate_url, validate_phone
 
 
 class UserSchema(BaseOutSchema):
@@ -12,8 +12,6 @@ class UserSchema(BaseOutSchema):
     phone: str | None = None
     is_active: bool | None = None
     is_superuser: bool | None = None
-    first_name: str | None = None
-    last_name: str | None = None
     avatar: str | None = None
     birth_date: datetime | None = None
     uae_id: str | None = None
@@ -29,6 +27,8 @@ class UserSchema(BaseOutSchema):
 
 
 class UserRegisterInSchema(BaseInSchema):
+    first_name: str
+    last_name: str
     email: EmailStr
     phone: str
     password: str
@@ -45,8 +45,14 @@ class UserRegisterInSchema(BaseInSchema):
     def redirect_url_validation(cls, v):
         return validate_url(v)
 
+    @validator("phone")
+    def phone_validation(cls, v):
+        return validate_phone(v)
+
 
 class UserCreateDBSchema(BaseInSchema):
+    first_name: str
+    last_name: str
     email: EmailStr
     phone: str
     hashed_password: str

@@ -1,2 +1,2 @@
-from .get_current_user_use_case import GetCurrentUserUseCase
+from .get_user_use_case import GetUserCase
 from .register_user_use_case import RegisterUserUseCase

@@ -1,11 +1,11 @@
+from users.data.repositories.user_repository import UserRepository
 from users.domain.dto.user import UserSchema
-from users.domain.repositories import IUserRepository
 from users.utils.db_obj_to_dict import db_obj_to_dict
 from users.utils.security import verify_password
 
 
-class AuthenticateUserUseCase:
-    def __init__(self, repository: IUserRepository):
+class AuthenticateUserCase:
+    def __init__(self, repository: UserRepository):
         self.repository = repository
 
     async def __call__(self, email: str, password: str) -> UserSchema | None:

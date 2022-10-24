@@ -1,8 +1,8 @@
-"""init
+"""initial
 
-Revision ID: 72bac8c15b38
+Revision ID: 5d71a571b9d3
 Revises: 
-Create Date: 2022-10-12 11:23:59.538257
+Create Date: 2022-10-23 08:53:16.087030
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '72bac8c15b38'
+revision = '5d71a571b9d3'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -30,6 +30,8 @@ def upgrade() -> None:
     op.create_index(op.f('ix_outstanding_token_jti'), 'outstanding_token', ['jti'], unique=True)
     op.create_table('user',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('first_name', sa.String(), nullable=False),
+    sa.Column('last_name', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
     sa.Column('hashed_password', sa.String(), nullable=False),
     sa.Column('is_active', sa.Boolean(), nullable=True),
