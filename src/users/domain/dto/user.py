@@ -2,28 +2,22 @@ from datetime import datetime
 
 from pydantic import EmailStr, validator
 
-from core.dto import BaseInSchema, BaseOutSchema
-from users.enums import BustType
+from core.dto import BaseInSchema, BaseOutSchema, OrmModel
 from users.utils import validate_url, validate_phone
 
 
-class UserSchema(BaseOutSchema):
+class BaseUserSchema(OrmModel):
     email: EmailStr | None = None
     phone: str | None = None
     is_active: bool | None = None
-    is_superuser: bool | None = None
-    avatar: str | None = None
     birth_date: datetime | None = None
-    uae_id: str | None = None
-    passport_id: str | None = None
     street: str | None = None
     city: str | None = None
     country: str | None = None
-    state: str | None = None
-    instagram_url: str | None = None
-    height: float | None = None
-    weight: float | None = None
-    bust_type: BustType | None = None
+
+
+class UserOutSchema(BaseOutSchema, BaseUserSchema):
+    ...
 
 
 class UserRegisterInSchema(BaseInSchema):

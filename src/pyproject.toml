@@ -27,6 +27,7 @@ python-jose = {extras = ["cryptography"], version = "^3.3.0"}
 redis = "^4.3.4"
 pilkit = "^2.0"
 google-cloud-storage = "^2.4.0"
+dependency-injector = "^4.40.0"
 
 [tool.poetry.dev-dependencies]
 

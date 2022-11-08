@@ -5,7 +5,7 @@ from users.domain.dto.user import UserRegisterInSchema, UserCreateDBSchema
 from users.utils.security import get_password_hash
 
 
-class RegisterUserUseCase:
+class RegisterUserCase:
     def __init__(self, repository: UserRepository):
         self.repository = repository
 
